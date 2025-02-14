@@ -1,17 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: green;
+            border: 1px solid silver;
+        }
+
+        .buu {
+            border: 3px solid white;
+            max-width: 200px;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .try,
+        .hjy {
+            max-width: 60vw;
+        }
+
+        .yui {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .lab {
+            background-color: rgba(110, 190, 255, 0.336);
+            padding: 10px;
+            width: 400px;
+            margin-right: 10px;
+            font-weight: 400;
+            border-radius: 8px;
+        }
+
+        .ip {
+            width: 30px;
+            height: 60px;
+        }
+    </style>
+    {% endblock %}
+
+    {% block javascripts %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="min-h-screen bg-gradient-to-tr from-blue-300 to-sky-100 text-black-900 flex  flex-col">
+        <div class="text-right text-2xl p-1">
+            <span>Temps restant : </span>
+            <span class="font-bold" id="compteur">05h23</span>
+        </div>
         {% block body %}{% endblock %}
-    </body>
+
+    </div>
+    <script>
+        function updateCountdown() {
+            const now = new Date(); // Heure actuelle
+            const currentHour = now.getHours(); // Heure actuelle
+
+            // Si l'heure est avant 08h00, on arrête l'exécution de la fonction
+            if (currentHour < 8) {
+                return;
+            }
+
+            const targetTime = new Date(); // Crée une nouvelle date
+            targetTime.setHours(18, 0, 0, 0); // Fixe l'heure cible à 18h00 aujourd'hui
+
+            const timeRemaining = targetTime - now; // Temps restant en millisecondes
+
+            // Si l'heure cible est déjà passée aujourd'hui, on calcule pour le jour suivant
+            if (timeRemaining <= 0) {
+                targetTime.setDate(targetTime.getDate() + 1); // Fixe la cible au lendemain 18h00
+            }
+
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60)); // Heure restante
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60)); // Minutes restantes
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000); // Secondes restantes
+
+            // Affiche le temps restant dans l'élément avec l'ID 'compteur'
+            const countdownElement = document.getElementById('compteur');
+            countdownElement.textContent = `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Met à jour le décompte chaque seconde uniquement après 08h00
+        setInterval(updateCountdown, 1000);
+
+    </script>
+</body>
+
 </html>
