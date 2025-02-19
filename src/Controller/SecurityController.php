@@ -149,18 +149,20 @@ class SecurityController extends AbstractController
                 "Président : $presidentChoice\n" .
                 "Secrétaire général(e) : $secretaryChoice\n" .
                 "Trésorier(e) général(e) : $treasurerChoice");
+                
         // Création du contenu de l'email
-        $email = (new Email())
-            ->from('noreply@vote_ap-pnudm')
-            ->to($voterEmail)
-            ->subject('Votre vote a été validé')
-            ->text(
-                "Login : $voterEmail\n" .
+        $content = "Login : $voterEmail\n" .
                 "Récapitulatif de votre vote.\n" .
                 "Président : $presidentChoice\n" .
                 "Secrétaire général(e) : $secretaryChoice\n" .
-                "Trésorier(e) général(e) : $treasurerChoice"
-            );
+                "Trésorier(e) général(e) : $treasurerChoice";
+
+        $email = (new Email())
+            ->from('tapamotapamo5@gmail.com')
+            ->to($voterEmail)
+            ->subject('Votre vote a été validé')
+            ->text($content)
+            ->html("<p>$content</p>");
 
         // Envoi de l'email
         $mailer->send($email);
