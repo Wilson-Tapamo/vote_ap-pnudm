@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\TVotePresident;
 use App\Repository\TVotePresidentRepository;
+use App\Repository\TVoteSecretaireGeneralAdjointRepository;
 use App\Repository\TVoteSecretaireGeneralRepository;
+use App\Repository\TVoteTresorierGeneralAdjointRepository;
 use App\Repository\TVoteTresorierGeneralRepository;
+use App\Repository\TVoteVicepresidentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use SebastianBergmann\Environment\Console;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,9 +80,38 @@ class SecurityController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        return $this->redirectToRoute('vote_vicepresident', ['id' => $user->getId()]);
+    }
+    //vice-president
+    #[Route('/vote/vicepresident/{id}', name: 'vote_vicepresident')]
+    public function voteVicePresident($id, TVoteVicepresidentRepository $tVoteVicepresidentRepository): Response
+    {
+        $user = $tVoteVicepresidentRepository->find($id);
+        if (!$user || $user->getEtatVote() == 1) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('vote/vicepresident.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    #[Route('/vote/vicepresident/{id}/submit', name: 'vote_vicepresident_vote')]
+    public function submitVoteVP(Request $request, $id, TVoteVicepresidentRepository $tVoteVicepresidentRepository, EntityManagerInterface $entityManagerInterface, SessionInterface $session): Response
+    {
+        $vote = $request->request->get('vote');
+        $user = $tVoteVicepresidentRepository->find($id);
+
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+        $session->set('vicepresident',$vote);
+        $user->setEtatVote(1); // L'électeur a voté
+        $user->{'set'.$vote}(1);   // Met à jour le compteur du candidat choisi
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
         return $this->redirectToRoute('vote_secretaire', ['id' => $user->getId()]);
     }
-
     //secretaire
 
     #[Route('/vote/secretaire/{id}', name: 'vote_secretaire')]
@@ -110,9 +142,40 @@ class SecurityController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        return $this->redirectToRoute('vote_secretaireadjoint', ['id' => $user->getId()]);
+    }
+    //vicesecretaire
+    
+    #[Route('/vote/secretaireadjoint/{id}', name: 'vote_secretaireadjoint')]
+    public function voteSecretaireAdjoint($id, TVoteSecretaireGeneralAdjointRepository $tVoteSecretaireGeneralAdjointRepository): Response
+    {
+        $user = $tVoteSecretaireGeneralAdjointRepository->find($id);
+        if (!$user || $user->getEtatVote() == 1) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('vote/secretaireadjoint.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    #[Route('/vote/secretaireadjoint/{id}/submit', name: 'vote_secretaireadjoint_vote')]
+    public function submitVoteSA(Request $request, $id,  TVoteSecretaireGeneralAdjointRepository $tVoteSecretaireGeneralAdjointRepository, EntityManagerInterface $entityManagerInterface, SessionInterface $session): Response
+    {
+        $vote = $request->request->get('vote');
+        $user = $tVoteSecretaireGeneralAdjointRepository->find($id);
+
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $session->set('secretaireAdjoint',$vote);
+        $user->setEtatVote(1); // L'électeur a voté
+        $user->{'set'.$vote}(1);   // Met à jour le compteur du candidat choisi
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
         return $this->redirectToRoute('vote_tresorier', ['id' => $user->getId()]);
     }
-
     //tresorerie
     #[Route('/vote/tresorier/{id}', name: 'vote_tresorier')]
     public function voteTresorier($id, TVoteTresorierGeneralRepository $tVoteTresorierGeneralRepository): Response
@@ -136,6 +199,37 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        $session->set('tresorier',$vote);
+        $user->setEtatVote(1); // L'électeur a voté
+        $user->{'set'.$vote}(1);   // Met à jour le compteur du candidat choisi
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('vote_tresorieradjoint', ['id' => $user->getId()]);
+    }
+    //tresorerieAdjoint
+    #[Route('/vote/tresorieradjoint/{id}', name: 'vote_tresorieradjoint')]
+    public function voteTresorierAdjoint($id, TVoteTresorierGeneralAdjointRepository $tVoteTresorierGeneralAdjointRepository): Response
+    {
+        $user = $tVoteTresorierGeneralAdjointRepository->find($id);
+        if (!$user || $user->getEtatVote() == 1) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('vote/tresorierAdjoint.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    #[Route('/vote/tresorieradjoint/{id}/submit', name: 'vote_tresorieradjoint_vote')]
+    public function submitVoteTA(Request $request, $id, TVoteTresorierGeneralAdjointRepository $tVoteTresorierGeneralAdjointRepository, EntityManagerInterface $entityManagerInterface, SessionInterface $session, MailerInterface $mailer): Response
+    {
+        $vote = $request->request->get('vote');
+        $user = $tVoteTresorierGeneralAdjointRepository->find($id);
+
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $user->setEtatVote(1); // L'électeur a voté
         $user->{'set'.$vote}(1);   // Met à jour le compteur du candidat choisi
         $entityManagerInterface->persist($user);
@@ -143,12 +237,12 @@ class SecurityController extends AbstractController
 
         $voterEmail = $user->getLoginEmail();
         $presidentChoice = $session->get('president');
+        $vicepresidentChoice = $session->get('vicepresident');
         $secretaryChoice = $session->get('secretaire');
+        $secretaryadjointChoice = $session->get('secretaireAdjoint');
+        $tresorierChoice = $session->get('tresorier');
         $treasurerChoice = $vote;
-        dd("Récapitulatif de votre vote.\n" .
-                "Président : $presidentChoice\n" .
-                "Secrétaire général(e) : $secretaryChoice\n" .
-                "Trésorier(e) général(e) : $treasurerChoice");
+        
         // Création du contenu de l'email
         $email = (new Email())
             ->from('noreply@vote_ap-pnudm')
@@ -158,8 +252,11 @@ class SecurityController extends AbstractController
                 "Login : $voterEmail\n" .
                 "Récapitulatif de votre vote.\n" .
                 "Président : $presidentChoice\n" .
+                "Vice-Président : $vicepresidentChoice\n" .
                 "Secrétaire général(e) : $secretaryChoice\n" .
-                "Trésorier(e) général(e) : $treasurerChoice"
+                "Secrétaire général(e) Adjoint : $secretaryadjointChoice\n" .
+                "Trésorier(e) général(e) : $tresorierChoice\n" .
+                "Trésorier(e) général(e) Adjoint : $treasurerChoice\n"
             );
 
         // Envoi de l'email

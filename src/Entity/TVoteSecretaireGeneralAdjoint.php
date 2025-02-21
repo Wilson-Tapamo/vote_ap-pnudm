@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\TVoteTresorierGeneralRepository;
+use App\Repository\TVoteSecretaireGeneralAdjointRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TVoteTresorierGeneralRepository::class)]
-class TVoteTresorierGeneral
+#[ORM\Entity(repositoryClass: TVoteSecretaireGeneralAdjointRepository::class)]
+class TVoteSecretaireGeneralAdjoint
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,11 +19,11 @@ class TVoteTresorierGeneral
     #[ORM\Column(length: 100)]
     private ?string $nom_prenom_electeur = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $login_email = null;
-
     #[ORM\Column(length: 50)]
     private ?string $mot_passe = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $login_email = null;
 
     #[ORM\Column(length: 1)]
     private ?string $sexe = null;
@@ -32,10 +32,13 @@ class TVoteTresorierGeneral
     private ?int $etat_vote = null;
 
     #[ORM\Column]
-    private ?int $Vote_Blanc = null;
+    private ?int $HAIDARA_Mohamed_Lamine = null;
 
     #[ORM\Column]
-    private ?int $COULIBALY_Spencer = null;
+    private ?int $Keita_Fatoumata = null;
+
+    #[ORM\Column]
+    private ?int $Vote_Blanc = null;
 
     public function getId(): ?int
     {
@@ -66,18 +69,6 @@ class TVoteTresorierGeneral
         return $this;
     }
 
-    public function getLoginEmail(): ?string
-    {
-        return $this->login_email;
-    }
-
-    public function setLoginEmail(string $login_email): static
-    {
-        $this->login_email = $login_email;
-
-        return $this;
-    }
-
     public function getMotPasse(): ?string
     {
         return $this->mot_passe;
@@ -86,6 +77,18 @@ class TVoteTresorierGeneral
     public function setMotPasse(string $mot_passe): static
     {
         $this->mot_passe = $mot_passe;
+
+        return $this;
+    }
+
+    public function getLoginEmail(): ?string
+    {
+        return $this->login_email;
+    }
+
+    public function setLoginEmail(string $login_email): static
+    {
+        $this->login_email = $login_email;
 
         return $this;
     }
@@ -114,6 +117,30 @@ class TVoteTresorierGeneral
         return $this;
     }
 
+    public function getHAIDARAMohamedLamine(): ?int
+    {
+        return $this->HAIDARA_Mohamed_Lamine;
+    }
+
+    public function setHAIDARAMohamedLamine(int $HAIDARA_Mohamed_Lamine): static
+    {
+        $this->HAIDARA_Mohamed_Lamine = $HAIDARA_Mohamed_Lamine;
+
+        return $this;
+    }
+
+    public function getKeitaFatoumata(): ?int
+    {
+        return $this->Keita_Fatoumata;
+    }
+
+    public function setKeitaFatoumata(int $Keita_Fatoumata): static
+    {
+        $this->Keita_Fatoumata = $Keita_Fatoumata;
+
+        return $this;
+    }
+
     public function getVoteBlanc(): ?int
     {
         return $this->Vote_Blanc;
@@ -122,18 +149,6 @@ class TVoteTresorierGeneral
     public function setVoteBlanc(int $Vote_Blanc): static
     {
         $this->Vote_Blanc = $Vote_Blanc;
-
-        return $this;
-    }
-
-    public function getCOULIBALYSpencer(): ?int
-    {
-        return $this->COULIBALY_Spencer;
-    }
-
-    public function setCOULIBALYSpencer(int $COULIBALY_Spencer): static
-    {
-        $this->COULIBALY_Spencer = $COULIBALY_Spencer;
 
         return $this;
     }

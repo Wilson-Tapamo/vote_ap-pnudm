@@ -32,13 +32,13 @@ class TVoteSecretaireGeneral
     private ?int $etat_vote = null;
 
     #[ORM\Column]
-    private ?int $Mathieu_Coulibaly = null;
-
-    #[ORM\Column]
-    private ?int $Sidi_Diawara = null;
-
-    #[ORM\Column]
     private ?int $Vote_Blanc = null;
+
+    #[ORM\Column]
+    private ?int $COULIBALY_Abdouramane = null;
+
+    #[ORM\Column]
+    private ?int $DIA_Aissata_Dite_Diodo = null;
 
     public function getId(): ?int
     {
@@ -117,30 +117,6 @@ class TVoteSecretaireGeneral
         return $this;
     }
 
-    public function getMathieuCoulibaly(): ?int
-    {
-        return $this->Mathieu_Coulibaly;
-    }
-
-    public function setMathieuCoulibaly(int $Mathieu_Coulibaly): static
-    {
-        $this->Mathieu_Coulibaly = $Mathieu_Coulibaly;
-
-        return $this;
-    }
-
-    public function getSidiDiawara(): ?int
-    {
-        return $this->Sidi_Diawara;
-    }
-
-    public function setSidiDiawara(int $Sidi_Diawara): static
-    {
-        $this->Sidi_Diawara = $Sidi_Diawara;
-
-        return $this;
-    }
-
     public function getVoteBlanc(): ?int
     {
         return $this->Vote_Blanc;
@@ -149,6 +125,30 @@ class TVoteSecretaireGeneral
     public function setVoteBlanc(int $Vote_Blanc): static
     {
         $this->Vote_Blanc = $Vote_Blanc;
+
+        return $this;
+    }
+
+    public function getCOULIBALYAbdouramane(): ?int
+    {
+        return $this->COULIBALY_Abdouramane;
+    }
+
+    public function setCOULIBALYAbdouramane(int $COULIBALY_Abdouramane): static
+    {
+        $this->COULIBALY_Abdouramane = $COULIBALY_Abdouramane;
+
+        return $this;
+    }
+
+    public function getDIAAissataDiteDiodo(): ?int
+    {
+        return $this->DIA_Aissata_Dite_Diodo;
+    }
+
+    public function setDIAAissataDiteDiodo(int $DIA_Aissata_Dite_Diodo): static
+    {
+        $this->DIA_Aissata_Dite_Diodo = $DIA_Aissata_Dite_Diodo;
 
         return $this;
     }

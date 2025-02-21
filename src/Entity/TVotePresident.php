@@ -37,16 +37,13 @@ class TVotePresident
     private ?\DateTimeInterface $date_heure_cnx = null;
 
     #[ORM\Column]
-    private ?int $Djeneba_Diawara = null;
-
-    #[ORM\Column]
-    private ?int $Faran_Sidibe = null;
-
-    #[ORM\Column]
-    private ?int $Moussa_Diomande = null;
-
-    #[ORM\Column]
     private ?int $Vote_Blanc = null;
+
+    #[ORM\Column]
+    private ?int $COULIBALY_Florence = null;
+
+    #[ORM\Column]
+    private ?int $KANNE_Countel = null;
 
     public function getId(): ?int
     {
@@ -137,42 +134,6 @@ class TVotePresident
         return $this;
     }
 
-    public function getDjenebaDiawara(): ?int
-    {
-        return $this->Djeneba_Diawara;
-    }
-
-    public function setDjenebaDiawara(int $Djeneba_Diawara): static
-    {
-        $this->Djeneba_Diawara = $Djeneba_Diawara;
-
-        return $this;
-    }
-
-    public function getFaranSidibe(): ?int
-    {
-        return $this->Faran_Sidibe;
-    }
-
-    public function setFaranSidibe(int $Faran_Sidibe): static
-    {
-        $this->Faran_Sidibe = $Faran_Sidibe;
-
-        return $this;
-    }
-
-    public function getMoussaDiomande(): ?int
-    {
-        return $this->Moussa_Diomande;
-    }
-
-    public function setMoussaDiomande(int $Moussa_Diomande): static
-    {
-        $this->Moussa_Diomande = $Moussa_Diomande;
-
-        return $this;
-    }
-
     public function getVoteBlanc(): ?int
     {
         return $this->Vote_Blanc;
@@ -181,6 +142,30 @@ class TVotePresident
     public function setVoteBlanc(int $Vote_Blanc): static
     {
         $this->Vote_Blanc = $Vote_Blanc;
+
+        return $this;
+    }
+
+    public function getCOULIBALYFlorence(): ?int
+    {
+        return $this->COULIBALY_Florence;
+    }
+
+    public function setCOULIBALYFlorence(int $COULIBALY_Florence): static
+    {
+        $this->COULIBALY_Florence = $COULIBALY_Florence;
+
+        return $this;
+    }
+
+    public function getKANNECountel(): ?int
+    {
+        return $this->KANNE_Countel;
+    }
+
+    public function setKANNECountel(int $KANNE_Countel): static
+    {
+        $this->KANNE_Countel = $KANNE_Countel;
 
         return $this;
     }
