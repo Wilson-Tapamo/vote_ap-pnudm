@@ -1,46 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vote Secretaire{% endblock %}
+{% block title %}Vote Tresorier{% endblock %}
 
 {% block body %}
-<h1 class="text-3xl text-center " style="color: #9f4c22;">Vote du <span class="font-bold">secrétaire général(e) de l’AP-PNUDM</span></h1>
+<h1 class="text-3xl text-center" style="color: rgb(255,192,0);">Vote du <span class="font-bold">Trésorier(e) général(e) adjoint de l’AP-PNUDM</span></h1>
 
 <div class="flex justify-end hjy self-center w-full">
     <button onclick="handleRadioSelection()"
-        class="py-2 px-4 bg-blue-500 buu text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color: #9f4c22;color: #fff;">
+        class="py-2 px-4 bg-blue-500 buu text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color: rgb(255,192,0);color: #fff;">
         Suivant
     </button>
 </div>
-<form action="{{ path('vote_secretaire_vote', {id: user.id}) }}" method="post" class="flex flex-col justify-center">
+<form action="{{ path('vote_tresorieradjoint_vote', {id: user.id}) }}" method="post" class="flex flex-col justify-center">
     <div id="popup" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded shadow-lg max-w-sm w-full">
             <h2 class="text-xl mb-4">Validez votre choix ?</h2>
             <p id="presidentName" class="mb-4">Président : </p>
             <div class="flex justify-around">
-                <button type="submit" id="yesBtn" class="px-4 py-2 text-white rounded" style="background-color: #9f4c22;">Oui</button>
-                <button id="noBtn" class="px-4 py-2 bg-red-500 text-white rounded" style="background-color: #9f4c22;">Non</button>
+                <button type="submit" id="yesBtn" class="px-4 py-2 bg-green-500 text-white rounded" style="background-color: rgb(255,192,0);color: #fff;">Oui</button>
+                <button id="noBtn" class="px-4 py-2 bg-red-500 text-white rounded" style="background-color: rgb(255,192,0);color: #fff;">Non</button>
             </div>
         </div>
     </div>
     <div class="max-w-screen-xl m-0 sm:m-6 bg-white shadow try flex  flex-1 self-center w-full shadow-xl">
         <div class="max-w-xl  bg-white p-8  rounded-lg">
-            <h1 class="yui" style="color: #9f4c22;">Sélectionnez votre candidat puis, cliquez sur suivant.</h1>
+            <h1 class="yui" style="color: rgb(255,192,0);">Sélectionnez votre candidat puis, cliquez sur suivant.</h1>
             <div class="space-y-4">
                 <div class="flex items-center">
                     <span class="circle"
-                        style="background-image: url(../../s1.webp);background-position: center;object-fit: cover;background-size: cover;"></span>
-                    <label for="COULIBALYAbdouramane" class="ml-2 text-lg lab" style="background-color: #9f4c22;color: #fff;">COULIBALY Abdouramane</label>
-                    <input type="radio" id="COULIBALYAbdouramane" name="vote" value="COULIBALYAbdouramane"
-                        class="h-5 w-5 text-red-900 ip" />
-
-                </div>
-            </div>
-            <div class="space-y-4 mt-4">
-                <div class="flex items-center">
-                    <span class="circle"
-                        style="background-image: url(../../s2.webp);background-position: center;object-fit: cover;background-size: cover;"></span>
-                    <label for="DIAAissataDiteDiodo" class="ml-2 text-lg lab" style="background-color: #9f4c22;color: #fff;">DIA Aissata Dite Diodo</label>
-                    <input type="radio" id="DIAAissataDiteDiodo" name="vote" value="DIAAissataDiteDiodo"
+                        style="background-image: url(../../ta1.webp);background-position: center;object-fit: cover;background-size: cover;"></span>
+                    <label for="TOUREMariama" class="ml-2 text-lg lab" style="background-color: rgb(255,192,0);color: #fff;">TOURE Mariama</label>
+                    <input type="radio" id="TOUREMariama" name="vote" value="TOUREMariama"
                         class="h-5 w-5 text-red-900 ip" />
 
                 </div>
@@ -49,7 +39,7 @@
                 <div class="flex items-center">
                     <span class="circle"
                         style="background-color: white;background-position: center;object-fit: cover;background-size: cover;"></span>
-                    <label for="candidate1" class="ml-2 text-lg lab" style="background-color: #9f4c22;color: #fff;">Vote Blanc</label>
+                    <label for="candidate1" class="ml-2 text-lg lab" style="background-color: rgb(255,192,0);color: #fff;">Vote Blanc</label>
                     <input type="radio" id="voteBlanc" name="vote" value="VoteBlanc" class="h-5 w-5 text-red-900 ip" />
 
                 </div>
@@ -59,8 +49,8 @@
 </form>
     <div class="flex justify-between hjy self-center w-full">
         <span class="text-white pr-8">Votant : {{ user.loginemail }}</span>
-        <button onclick="handleRadioSelection()"
-            class="py-2 px-4 bg-blue-500 buu text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" style="background-color: #9f4c22;color: #fff;">
+        <button onclick="handleRadioSelection()" style="background-color: rgb(255,192,0);color: #fff;"
+            class="py-2 px-4 bg-blue-500 buu text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
             Suivant
         </button>
     </div>

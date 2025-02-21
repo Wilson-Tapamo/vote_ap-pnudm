@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\TVoteTresorierGeneralRepository;
+use App\Repository\TVoteTresorierGeneralAdjointRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TVoteTresorierGeneralRepository::class)]
-class TVoteTresorierGeneral
+#[ORM\Entity(repositoryClass: TVoteTresorierGeneralAdjointRepository::class)]
+class TVoteTresorierGeneralAdjoint
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,10 +32,10 @@ class TVoteTresorierGeneral
     private ?int $etat_vote = null;
 
     #[ORM\Column]
-    private ?int $Vote_Blanc = null;
+    private ?int $TOURE_Mariama = null;
 
     #[ORM\Column]
-    private ?int $COULIBALY_Spencer = null;
+    private ?int $Vote_Blanc = null;
 
     public function getId(): ?int
     {
@@ -114,6 +114,18 @@ class TVoteTresorierGeneral
         return $this;
     }
 
+    public function getTOUREMariama(): ?int
+    {
+        return $this->TOURE_Mariama;
+    }
+
+    public function setTOUREMariama(int $TOURE_Mariama): static
+    {
+        $this->TOURE_Mariama = $TOURE_Mariama;
+
+        return $this;
+    }
+
     public function getVoteBlanc(): ?int
     {
         return $this->Vote_Blanc;
@@ -122,18 +134,6 @@ class TVoteTresorierGeneral
     public function setVoteBlanc(int $Vote_Blanc): static
     {
         $this->Vote_Blanc = $Vote_Blanc;
-
-        return $this;
-    }
-
-    public function getCOULIBALYSpencer(): ?int
-    {
-        return $this->COULIBALY_Spencer;
-    }
-
-    public function setCOULIBALYSpencer(int $COULIBALY_Spencer): static
-    {
-        $this->COULIBALY_Spencer = $COULIBALY_Spencer;
 
         return $this;
     }
