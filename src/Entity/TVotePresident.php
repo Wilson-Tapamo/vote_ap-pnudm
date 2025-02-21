@@ -33,7 +33,7 @@ class TVotePresident
     #[ORM\Column]
     private ?int $etat_vote = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_heure_cnx = null;
 
     #[ORM\Column]
